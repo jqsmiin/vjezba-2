@@ -3,29 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <title>All Rooms</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #2d3748;
+        }
+        
+        tbody tr {
+            transition: background-color 0.2s ease;
+        }
+        
+        tbody tr:hover {
+            background-color: #f7fafc;
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .badge-available {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .badge-unavailable {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        
+        .price {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .nav-links {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+        
+        .nav-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .nav-links a:hover {
+            color: #5568d3;
+            text-decoration: underline;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px;
+            color: #718096;
+            font-size: 1.1rem;
+        }
+    </style>
 </head>
 <body>
-<h1>All Rooms</h1>
-<table border="1" cellpadding="4" cellspacing="0">
-    <tr>
-        <th>ID</th>
-        <th>Number</th>
-        <th>Type</th>
-        <th>Price</th>
-        <th>Available</th>
-    </tr>
-    <tr th:each="r : ${rooms}">
-        <td th:text="${r.id}"></td>
-        <td th:text="${r.number}"></td>
-        <td th:text="${r.type}"></td>
-        <td th:text="${r.price}"></td>
-        <td th:text="${r.available}"></td>
-    </tr>
-    <tr th:if="${rooms == null or #lists.isEmpty(rooms)}">
-        <td colspan="5">No rooms available.</td>
-    </tr>
-    </table>
-<p><a href="/a">Back to hotels</a></p>
+    <div class="container">
+        <h1>🛏️ All Rooms</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Room Number</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="r : ${rooms}">
+                    <td th:text="${r.id}">1</td>
+                    <td th:text="${r.number}">101</td>
+                    <td th:text="${r.type}">Single</td>
+                    <td class="price">$<span th:text="${r.price}">50.0</span></td>
+                    <td>
+                        <span th:if="${r.available}" class="badge badge-available">Available</span>
+                        <span th:if="${!r.available}" class="badge badge-unavailable">Occupied</span>
+                    </td>
+                </tr>
+                <tr th:if="${rooms == null or #lists.isEmpty(rooms)}">
+                    <td colspan="5" class="empty-state">No rooms available.</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="nav-links">
+            <a href="/a">← Back to hotels</a>
+        </div>
+    </div>
 </body>
 </html>
 
