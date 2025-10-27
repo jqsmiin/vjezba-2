@@ -1,8 +1,8 @@
 # 🏨 Hotel & Rooms
 
 ### 👥 Autori
-- **Jasmin**  
-- **Harun**
+- **Jasmin Oruč**  
+- **Harun Kos**
 
 ---
 
