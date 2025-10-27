@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Rooms</title>
+</head>
+<body>
+<h1>All Rooms</h1>
+<table border="1" cellpadding="4" cellspacing="0">
+    <tr>
+        <th>ID</th>
+        <th>Number</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>Available</th>
+    </tr>
+    <tr th:each="r : ${rooms}">
+        <td th:text="${r.id}"></td>
+        <td th:text="${r.number}"></td>
+        <td th:text="${r.type}"></td>
+        <td th:text="${r.price}"></td>
+        <td th:text="${r.available}"></td>
+    </tr>
+    <tr th:if="${rooms == null or #lists.isEmpty(rooms)}">
+        <td colspan="5">No rooms available.</td>
+    </tr>
+    </table>
+<p><a href="/a">Back to hotels</a></p>
+</body>
+</html>
+
+

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotels</title>
+</head>
+<body>
+<h1>Hotels</h1>
+<ul>
+    <li th:each="h : ${hotels}">
+        <span th:text="${h.name}"></span> -
+        <span th:text="${h.city}"></span>
+        <a th:href="@{/a/action/{id}(id=${h.id})}">View Rooms</a>
+    </li>
+    <li th:if="${hotels == null or #lists.isEmpty(hotels)}">No hotels available.</li>
+</ul>
+<p><a href="/b">See all rooms</a></p>
+</body>
+</html>
+
+
