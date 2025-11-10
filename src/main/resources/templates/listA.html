@@ -114,20 +114,31 @@
 <body>
     <div class="container">
         <h1>🏨 Our Hotels</h1>
+        
+        <div style="text-align: right; margin-bottom: 20px;">
+            <a href="/a/new" class="btn" style="background: #48bb78;">+ New Hotel</a>
+        </div>
+        
         <div class="hotel-grid">
             <div class="hotel-card" th:each="h : ${hotels}">
                 <div class="hotel-info">
                     <h3 th:text="${h.name}">Hotel Name</h3>
                     <p th:text="${h.city}">City</p>
                 </div>
-                <a th:href="@{/a/action/{id}(id=${h.id})}" class="btn">View Rooms</a>
+                <div>
+                    <a th:href="@{/a/action/{id}(id=${h.id})}" class="btn" style="margin-right: 8px;">View Rooms</a>
+                    <a th:href="@{/a/edit/{id}(id=${h.id})}" class="btn" style="background: #ed8936; margin-right: 8px;">Edit</a>
+                    <a th:href="@{/a/delete/{id}(id=${h.id})}" class="btn" style="background: #f56565;" 
+                       onclick="return confirm('Are you sure you want to delete this hotel?')">Delete</a>
+                </div>
             </div>
             <div class="empty-state" th:if="${hotels == null or #lists.isEmpty(hotels)}">
                 No hotels available at the moment.
             </div>
         </div>
         <div class="nav-links">
-            <a href="/b">See all rooms →</a>
+            <a href="/b">See all rooms</a>
+            <a href="/c">See all reservations</a>
         </div>
     </div>
 </body>

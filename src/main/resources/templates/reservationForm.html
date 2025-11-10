@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+        }
+        
+        h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            color: #2d3748;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+        
+        .btn:hover {
+            background: #5568d3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #718096;
+        }
+        
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+        
+        .button-group {
+            margin-top: 30px;
+            text-align: center;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 th:text="${reservation.id != null ? 'Edit Reservation' : 'New Reservation'}">Reservation Form</h1>
+        
+        <form th:action="${reservation.id != null ? '/c/update/' + reservation.id : '/c/save'}" 
+              method="post" th:object="${reservation}">
+            
+            <div class="form-group">
+                <label for="guestName">Guest Name *</label>
+                <input type="text" id="guestName" th:field="*{guestName}" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="guestEmail">Email *</label>
+                    <input type="email" id="guestEmail" th:field="*{guestEmail}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="guestPhone">Phone *</label>
+                    <input type="tel" id="guestPhone" th:field="*{guestPhone}" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="hotelId">Hotel *</label>
+                <select id="hotelId" name="hotelId" required>
+                    <option value="">Select a hotel</option>
+                    <option th:each="hotel : ${hotels}" 
+                            th:value="${hotel.id}" 
+                            th:text="${hotel.name + ' - ' + hotel.city}"
+                            th:selected="${reservation.hotel != null and reservation.hotel.id == hotel.id}">
+                        Hotel Name
+                    </option>
+                </select>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="checkInDate">Check-In Date *</label>
+                    <input type="date" id="checkInDate" th:field="*{checkInDate}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="checkOutDate">Check-Out Date *</label>
+                    <input type="date" id="checkOutDate" th:field="*{checkOutDate}" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="numberOfGuests">Number of Guests *</label>
+                    <input type="number" id="numberOfGuests" th:field="*{numberOfGuests}" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="totalPrice">Total Price ($) *</label>
+                    <input type="number" id="totalPrice" th:field="*{totalPrice}" step="0.01" min="0" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="status">Status *</label>
+                <select id="status" th:field="*{status}" required>
+                    <option value="PENDING">Pending</option>
+                    <option value="CONFIRMED">Confirmed</option>
+                    <option value="CANCELLED">Cancelled</option>
+                </select>
+            </div>
+            
+            <div class="button-group">
+                <button type="submit" class="btn">
+                    <span th:text="${reservation.id != null ? 'Update Reservation' : 'Create Reservation'}">Save</span>
+                </button>
+                <a href="/c" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
