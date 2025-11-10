@@ -1,19 +1,10 @@
 package com.example.vjezba2.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "hotels")
 public class Hotel {
     @Id
@@ -35,7 +26,72 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms = new ArrayList<>();
 
-    public Hotel(String sunriseHotel, String zagreb, String s, int i) {
+    public Hotel() {
+    }
+
+    public Hotel(String name, String city, String address, int stars) {
+        this.name = name;
+        this.city = city;
+        this.address = address;
+        this.stars = stars;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getStars() {
+        return stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
+    }
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
+    }
+
+    public void addRoom(Room room) {
+        rooms.add(room);
+        room.setHotel(this);
+    }
+
+    public void removeRoom(Room room) {
+        rooms.remove(room);
+        room.setHotel(null);
     }
 }
 
