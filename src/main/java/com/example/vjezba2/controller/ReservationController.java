@@ -98,7 +98,7 @@ public class ReservationController {
         return "redirect:/c";
     }
 
-    // Delete reservation
+    // Delete reservations
     @GetMapping("/delete/{id}")
     public String deleteReservation(@PathVariable("id") Long id) {
         reservationRepository.deleteById(id);
